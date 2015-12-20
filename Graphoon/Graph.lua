@@ -91,6 +91,50 @@ function Graph.new()
     end
 
     ---
+    -- Creates a graph from a .tgf formatted file.
+    -- @param path (string) The path to the .tgf file to load.
+    -- @param x    (number) The x coordinate the nodes should be spawned at (optional).
+    -- @param y    (number) The y coordinate the nodes should be spawned at (optional).
+    --
+    function self:loadTGF( path, x, y )
+        local dx = x or 0;
+        local dy = y or 0;
+
+        local n = {};
+        local e = {};
+
+        local target = n;
+        for line in io.lines( path ) do
+            -- '#' marks the definitions for edges in the .tgf file.
+            if line == '#' then
+                target = e;
+            else
+                target[#target + 1] = line;
+            end
+        end
+
+        for _, line in ipairs( n ) do
+            local tmp = {}
+            for part in line:gmatch( '[^%s]+' ) do
+                tmp[#tmp + 1] = part;
+            end
+            -- Add a slight random variation to the spawn coordinates to kick start
+            -- the physics simulation.
+            local rx = love.math.random( 2, 5 );
+            local ry = love.math.random( 2, 5 );
+            self:addNode( tmp[1], tmp[2], dx + rx, dy + ry, tmp[1] == '1' );
+        end
+
+        for _, line in ipairs( e ) do
+            local tmp = {}
+            for part in line:gmatch( '[^%s]+' ) do
+                tmp[#tmp + 1] = part;
+            end
+            self:connectIDs( tmp[1], tmp[2] );
+        end
+    end
+
+    ---
     -- Adds a new edge between two nodes.
     -- @param origin - The node from which the edge originates.
     -- @param target - The node to which the edge is pointing to.
