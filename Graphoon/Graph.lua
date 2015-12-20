@@ -72,9 +72,9 @@ function Graph.new()
     -- @param anchor - Wether the node should be locked in place or not (optional).
     -- @param ... - Additional parameters (useful when a custom Node class is used).
     --
-    function self:addNode( id, x, y, anchor, ... )
+    function self:addNode( id, name, x, y, anchor, ... )
         assert( not nodes[id], "Node IDs must be unique." );
-        nodes[id] = Node.new( id, x, y, anchor, ... );
+        nodes[id] = Node.new( id, name, x, y, anchor, ... );
         return nodes[id];
     end
 
