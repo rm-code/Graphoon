@@ -30,6 +30,12 @@ function Graph.new()
         nodes[node:getID()] = node;
     end
 
+    function self:removeNode( node )
+        nodes[node:getID()] = nil;
+
+        self:removeEdges( node );
+    end
+
     function self:addEdge( origin, target )
         for _, edge in pairs(edges) do
             if edge.origin == origin and edge.target == target then
@@ -40,6 +46,14 @@ function Graph.new()
         assert(origin ~= target, "Tried to connect a node with itself.");
         edges[edgeIDs] = Edge.new( edgeIDs, origin, target );
         edgeIDs = edgeIDs + 1;
+    end
+
+    function self:removeEdges( node )
+        for id, edge in pairs( edges ) do
+            if edge.origin == node or edge.target == node then
+                edges[id] = nil;
+            end
+        end
     end
 
     function self:update( dt, ... )
