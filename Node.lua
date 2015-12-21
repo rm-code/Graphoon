@@ -7,6 +7,8 @@ local FORCE_MAX = 4;
 local NODE_SPEED = 8;
 local DAMPING_FACTOR = 0.95;
 
+local DEFAULT_MASS = 0.05;
+
 ---
 -- @param id - A unique id which will be used to reference this node.
 --
@@ -54,8 +56,7 @@ function Node.new( id, x, y )
         dx = dx / distance;
         dy = dy / distance;
 
-        local mass = 0.015 * (0 + math.log(math.max(24, 0)));
-        local strength = FORCE_CHARGE * ((mass) / (distance * distance));
+        local strength = FORCE_CHARGE * (DEFAULT_MASS / (distance * distance));
         applyForce(dx * strength, dy * strength);
     end
 
