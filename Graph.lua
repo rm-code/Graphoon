@@ -31,6 +31,13 @@ function Graph.new()
     end
 
     function self:addEdge( origin, target )
+        for _, edge in pairs(edges) do
+            if edge.origin == origin and edge.target == target then
+                error "Trying to connect nodes which are already connected.";
+            end
+        end
+
+        assert(origin ~= target, "Tried to connect a node with itself.");
         edges[edgeIDs] = Edge.new( edgeIDs, origin, target );
         edgeIDs = edgeIDs + 1;
     end
