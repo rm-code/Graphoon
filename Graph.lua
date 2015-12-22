@@ -14,15 +14,25 @@ function Graph.new()
 
     local center = Node.new( 'center ', love.graphics.getWidth() * 0.5, love.graphics.getHeight() * 0.5);
 
-    function self:init( table )
-        math.randomseed(120123091239581834213143141);
+    ---
+    -- Creates a new graph based on the information passed via the table
+    -- parameter. It creates all nodes and connects them via edges.
+    -- @param table - A table containing information about nodes and edges.
+    -- @param x - The minimum x value to use when randomly spawning nodes.
+    -- @param y - The minimum y value to use when randomly spawning nodes.
+    -- @param w - The maximum x value to use when randomly spawning nodes.
+    -- @param h - The maximum y value to use when randomly spawning nodes.
+    --
+    function self:create( table, x, y, w, h )
+        math.randomseed( os.time() );
 
         for _, id in pairs( table.nodes ) do
-            self:addNode( Node.new( id, math.random(100, 800), math.random(100, 400) ) );
+            local rx, ry = math.random( x, w ), math.random( y, h );
+            self:addNode( Node.new( id, rx, ry ));
         end
 
         for _, edge in pairs( table.edges ) do
-            self:addEdge( nodes[edge[1]], nodes[edge[2]] );
+            self:addEdge( nodes[edge.origin], nodes[edge.target] );
         end
     end
 
