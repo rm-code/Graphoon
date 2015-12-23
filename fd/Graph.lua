@@ -1,5 +1,6 @@
-local Node = require('Node');
-local Edge = require('Edge');
+local current = (...):gsub('%.[^%.]+$', '');
+local Node = require(current .. '.Node');
+local Edge = require(current .. '.Edge');
 
 local Graph = {};
 
