@@ -13,6 +13,35 @@ function Graph.new()
 
     local attractionPoint;
 
+    local minX, maxX, minY, maxY;
+
+    -- ------------------------------------------------
+    -- Local Functions
+    -- ------------------------------------------------
+
+    ---
+    -- Sets the graph's boundaries to nil.
+    --
+    local function resetBoundaries()
+        minX, maxX, minY, maxY = nil, nil, nil, nil;
+    end
+
+    ---
+    -- @param minX - The current minimum x position.
+    -- @param maxX - The current maximum y position.
+    -- @param minY - The current minimum x position.
+    -- @param maxY - The current maximum y position.
+    -- @param nx - The new x position to check.
+    -- @param ny - The new y position to check.
+    --
+    local function updateBoundaries( minX, maxX, minY, maxY, nx, ny )
+        return math.min( minX or nx, nx ), math.max( maxX or nx, nx ), math.min( minY or ny, ny ), math.max( maxY or ny, ny );
+    end
+
+    -- ------------------------------------------------
+    -- Public Functions
+    -- ------------------------------------------------
+
     ---
     -- Creates a new graph based on the information passed via the table
     -- parameter. It creates all nodes and connects them via edges.
@@ -108,6 +137,8 @@ function Graph.new()
             edge.target:attractTo( edge.origin );
         end
 
+        resetBoundaries();
+
         for _, nodeA in pairs( nodes ) do
             if attractionPoint then
                 nodeA:attractTo( attractionPoint );
@@ -119,6 +150,8 @@ function Graph.new()
                 end
             end
             nodeA:move( dt );
+
+            minX, maxX, minY, maxY = updateBoundaries( minX, maxX, minY, maxY, nodeA:getPosition() );
         end
     end
 
@@ -145,6 +178,13 @@ function Graph.new()
                 return node;
             end
         end
+    end
+
+    ---
+    -- Returns the graph's minimum and maxmimum x and y values.
+    --
+    function self:getBoundaries()
+        return minX, maxX, minY, maxY;
     end
 
     return self;
