@@ -6,7 +6,6 @@ local Graph = {};
 function Graph.new()
     local self = {};
 
-    -- Node Objects are stored in a table using their ID as an index.
     local nodes = {};
     local edges = {};
     local edgeIDs = 0;
@@ -35,21 +34,43 @@ function Graph.new()
         end
     end
 
+    ---
+    -- Add a node to the graph.
+    -- @param node - The node to add to the graph.
+    --
     function self:addNode( node )
         assert( not nodes[node:getID()], "Node IDs must be unique." );
         nodes[node:getID()] = node;
     end
 
+    ---
+    -- Remove a node from the graph. This will also remove all edges pointing to
+    -- or originating from this node.
+    -- @param node - The node to remove from the graph.
+    --
     function self:removeNode( node )
         nodes[node:getID()] = nil;
 
         self:removeEdges( node );
     end
 
+    ---
+    -- Adds a global attraction point.
+    -- This point won't show up in the graph itself and can not be interacted
+    -- with. Instead it only has the purpose to attract all nodes in the graph.
+    -- This can be useful if you have unconnected nodes and want to prevent
+    -- them from floating away.
+    -- @param ncx - The x-coordinate of the attraction point.
+    -- @param ncy - The y-coordinate of the attraction point.
     function self:addAttractionPoint( ncx, ncy )
         attractionPoint = Node.new( 'center', ncx, ncy );
     end
 
+    ---
+    -- Adds a new edge between two nodes.
+    -- @param origin - The node from which the edge originates.
+    -- @param target - The node to which the edge is pointing to.
+    --
     function self:addEdge( origin, target )
         for _, edge in pairs(edges) do
             if edge.origin == origin and edge.target == target then
@@ -62,6 +83,10 @@ function Graph.new()
         edgeIDs = edgeIDs + 1;
     end
 
+    ---
+    -- Removes all edges leading to or originating from a node.
+    -- @param node - The node to remove all edges from.
+    --
     function self:removeEdges( node )
         for id, edge in pairs( edges ) do
             if edge.origin == node or edge.target == node then
@@ -70,7 +95,11 @@ function Graph.new()
         end
     end
 
-    function self:update( dt, ... )
+    ---
+    -- Updates the graph.
+    -- @param dt - The delta time between frames.
+    --
+    function self:update( dt )
         for _, edge in pairs( edges ) do
             edge.origin:attractTo( edge.target );
             edge.target:attractTo( edge.origin );
@@ -90,10 +119,22 @@ function Graph.new()
         end
     end
 
+    ---
+    -- This function receives a single parameter of type function to which it
+    -- will pass the edges and nodes tables. This means the user has to provide
+    -- his own drawing function.
+    -- @param func - The function to pass the tables to.
+    --
     function self:draw( func )
         func( edges, nodes );
     end
 
+    ---
+    -- Gets a node at a certain point in the graph.
+    -- @param x - The x coordinate to check.
+    -- @param y - The y coordinate to check.
+    -- @param range - The range in which to check around the given coordinates.
+    --
     function self:getNodeAt(x, y, range)
         for _, node in pairs( nodes ) do
             local nx, ny = node:getPosition();
