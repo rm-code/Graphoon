@@ -84,15 +84,8 @@ function Graph.new()
         end
     end
 
-    function self:draw()
-        for _, edge in pairs( edges ) do
-            love.graphics.line( edge.origin:getX(), edge.origin:getY(), edge.target:getX(), edge.target:getY() );
-        end
-
-        for _, nodeA in pairs( nodes ) do
-            love.graphics.points( nodeA:getX(), nodeA:getY() );
-            love.graphics.print( nodeA:getID(), nodeA:getX(), nodeA:getY() );
-        end
+    function self:draw( func )
+        func( edges, nodes );
     end
 
     function self:getNodeAt(x, y, range)
