@@ -3,7 +3,6 @@ local Edge = require('Edge');
 
 local Graph = {};
 
--- TODO remove / replace LÖVE functions
 function Graph.new()
     local self = {};
 
@@ -12,7 +11,7 @@ function Graph.new()
     local edges = {};
     local edgeIDs = 0;
 
-    local center = Node.new( 'center ', love.graphics.getWidth() * 0.5, love.graphics.getHeight() * 0.5);
+    local attractionPoint;
 
     ---
     -- Creates a new graph based on the information passed via the table
@@ -47,6 +46,10 @@ function Graph.new()
         self:removeEdges( node );
     end
 
+    function self:addAttractionPoint( ncx, ncy )
+        attractionPoint = Node.new( 'center', ncx, ncy );
+    end
+
     function self:addEdge( origin, target )
         for _, edge in pairs(edges) do
             if edge.origin == origin and edge.target == target then
@@ -74,7 +77,10 @@ function Graph.new()
         end
 
         for _, nodeA in pairs( nodes ) do
-            nodeA:attractTo( center );
+            if attractionPoint then
+                nodeA:attractTo( attractionPoint );
+            end
+
             for _, nodeB in pairs( nodes ) do
                 if nodeA ~= nodeB then
                     nodeA:repelFrom( nodeB );
