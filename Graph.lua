@@ -26,7 +26,7 @@ function Graph.new()
 
         for _, id in pairs( table.nodes ) do
             local rx, ry = math.random( x, w ), math.random( y, h );
-            self:addNode( Node.new( id, rx, ry ));
+            self:addNode( id, rx, ry );
         end
 
         for _, edge in pairs( table.edges ) do
@@ -37,10 +37,12 @@ function Graph.new()
     ---
     -- Add a node to the graph.
     -- @param node - The node to add to the graph.
+    -- @param x - The x-coordinate at which to place the new node.
+    -- @param y - The y-coordinate at which to place the new node.
     --
-    function self:addNode( node )
-        assert( not nodes[node:getID()], "Node IDs must be unique." );
-        nodes[node:getID()] = node;
+    function self:addNode( id, x, y )
+        assert( not nodes[id], "Node IDs must be unique." );
+        nodes[id] = Node.new( id, x, y );
     end
 
     ---
