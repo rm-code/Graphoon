@@ -174,6 +174,13 @@ function Graph.new()
     end
 
     ---
+    -- Returns the node the id is pointing to.
+    -- param id - The id to check for.
+    function self:getNode( id )
+        return nodes[id];
+    end
+
+    ---
     -- Gets a node at a certain point in the graph.
     -- @param x - The x coordinate to check.
     -- @param y - The y coordinate to check.
