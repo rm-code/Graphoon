@@ -70,9 +70,9 @@ function Graph.new()
     -- @param x - The x-coordinate at which to place the new node.
     -- @param y - The y-coordinate at which to place the new node.
     --
-    function self:addNode( id, x, y )
+    function self:addNode( id, name, x, y )
         assert( not nodes[id], "Node IDs must be unique." );
-        nodes[id] = Node.new( id, x, y );
+        nodes[id] = Node.new( id, name, x, y );
     end
 
     ---

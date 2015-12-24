@@ -12,9 +12,10 @@ local DEFAULT_MASS = 0.05;
 ---
 -- @param id - A unique id which will be used to reference this node.
 --
-function Node.new( id, x, y )
+function Node.new( id, name, x, y )
     local self = {};
 
+    local name = name or id;
     local px, py = x or 0, y or 0;
     local ax, ay = 0, 0;
     local vx, vy = 0, 0;
@@ -77,6 +78,10 @@ function Node.new( id, x, y )
     --
     function self:getID()
         return id;
+    end
+
+    function self:getName()
+        return name;
     end
 
     function self:getX()
