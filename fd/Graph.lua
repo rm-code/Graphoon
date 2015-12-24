@@ -56,7 +56,7 @@ function Graph.new()
 
         for _, id in pairs( table.nodes ) do
             local rx, ry = math.random( x, w ), math.random( y, h );
-            self:addNode( id, rx, ry );
+            self:addNode( id, nil, rx, ry );
         end
 
         for _, edge in pairs( table.edges ) do
