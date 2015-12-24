@@ -54,9 +54,13 @@ function Graph.new()
     function self:create( table, x, y, w, h )
         math.randomseed( os.time() );
 
-        for _, id in pairs( table.nodes ) do
+        for _, node in pairs( table.nodes ) do
             local rx, ry = math.random( x, w ), math.random( y, h );
-            self:addNode( id, nil, rx, ry );
+            if type( node ) == 'string' then
+                self:addNode( node, nil, rx, ry );
+            elseif type( node ) == 'table' then
+                self:addNode( node.id, node.name, node.x or rx, node.y or ry );
+            end
         end
 
         for _, edge in pairs( table.edges ) do
