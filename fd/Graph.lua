@@ -11,8 +11,6 @@ function Graph.new()
     local edges = {};
     local edgeIDs = 0;
 
-    local attractionPoint;
-
     local minX, maxX, minY, maxY;
 
     -- ------------------------------------------------
@@ -91,18 +89,6 @@ function Graph.new()
     end
 
     ---
-    -- Adds a global attraction point.
-    -- This point won't show up in the graph itself and can not be interacted
-    -- with. Instead it only has the purpose to attract all nodes in the graph.
-    -- This can be useful if you have unconnected nodes and want to prevent
-    -- them from floating away.
-    -- @param ncx - The x-coordinate of the attraction point.
-    -- @param ncy - The y-coordinate of the attraction point.
-    function self:addAttractionPoint( ncx, ncy )
-        attractionPoint = Node.new( 'center', ncx, ncy );
-    end
-
-    ---
     -- Adds a new edge between two nodes.
     -- @param origin - The node from which the edge originates.
     -- @param target - The node to which the edge is pointing to.
@@ -144,10 +130,6 @@ function Graph.new()
         resetBoundaries();
 
         for _, nodeA in pairs( nodes ) do
-            if attractionPoint then
-                nodeA:attractTo( attractionPoint );
-            end
-
             if not nodeA:isAnchor() then
                 for _, nodeB in pairs( nodes ) do
                     if nodeA ~= nodeB then
