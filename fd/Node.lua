@@ -16,6 +16,7 @@ function Node.new( id, name, x, y )
     local self = {};
 
     local name = name or id;
+    local anchor = false;
     local px, py = x or 0, y or 0;
     local ax, ay = 0, 0;
     local vx, vy = 0, 0;
@@ -98,6 +99,14 @@ function Node.new( id, name, x, y )
 
     function self:setPosition( nx, ny )
         px, py = nx, ny;
+    end
+
+    function self:setAnchor( nanchor )
+        anchor = nanchor;
+    end
+
+    function self:isAnchor()
+        return anchor;
     end
 
     return self;

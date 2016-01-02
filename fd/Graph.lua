@@ -148,12 +148,14 @@ function Graph.new()
                 nodeA:attractTo( attractionPoint );
             end
 
-            for _, nodeB in pairs( nodes ) do
-                if nodeA ~= nodeB then
-                    nodeA:repelFrom( nodeB );
+            if not nodeA:isAnchor() then
+                for _, nodeB in pairs( nodes ) do
+                    if nodeA ~= nodeB then
+                        nodeA:repelFrom( nodeB );
+                    end
                 end
+                nodeA:move( dt );
             end
-            nodeA:move( dt );
 
             minX, maxX, minY, maxY = updateBoundaries( minX, maxX, minY, maxY, nodeA:getPosition() );
         end
@@ -211,6 +213,11 @@ function Graph.new()
     --
     function self:getCenter()
         return ( ( maxX - minX ) * 0.5 ) + minX, ( ( maxY - minY ) * 0.5 ) + minY;
+    end
+
+    function self:setAnchor( id, x, y )
+        nodes[id]:setPosition( x, y );
+        nodes[id]:setAnchor( true );
     end
 
     return self;
