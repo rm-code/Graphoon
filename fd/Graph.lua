@@ -75,6 +75,7 @@ function Graph.new()
     function self:addNode( id, name, x, y )
         assert( not nodes[id], "Node IDs must be unique." );
         nodes[id] = Node.new( id, name, x, y );
+        return nodes[id];
     end
 
     ---
