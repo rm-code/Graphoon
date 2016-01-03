@@ -57,7 +57,7 @@ function Graph.new()
             if type( node ) == 'string' then
                 self:addNode( node, nil, rx, ry );
             elseif type( node ) == 'table' then
-                self:addNode( node.id, node.name, node.x or rx, node.y or ry );
+                self:addNode( node.id, node.name, node.x or rx, node.y or ry, node.anchor );
             end
         end
 
@@ -72,9 +72,9 @@ function Graph.new()
     -- @param x - The x-coordinate at which to place the new node.
     -- @param y - The y-coordinate at which to place the new node.
     --
-    function self:addNode( id, name, x, y )
+    function self:addNode( id, name, x, y, anchor )
         assert( not nodes[id], "Node IDs must be unique." );
-        nodes[id] = Node.new( id, name, x, y );
+        nodes[id] = Node.new( id, name, x, y, anchor );
         return nodes[id];
     end
 
