@@ -68,9 +68,10 @@ function Graph.new()
 
     ---
     -- Add a node to the graph.
-    -- @param node - The node to add to the graph.
-    -- @param x - The x-coordinate at which to place the new node.
-    -- @param y - The y-coordinate at which to place the new node.
+    -- @param id - The ID will be used to reference the Node inside of the graph.
+    -- @param x  - The x coordinate the Node should be spawned at (optional).
+    -- @param y  - The y coordinate the Node should be spawned at (optional).
+    -- @param anchor - Wether the node should be locked in place or not (optional).
     --
     function self:addNode( id, x, y, anchor )
         assert( not nodes[id], "Node IDs must be unique." );
@@ -79,8 +80,8 @@ function Graph.new()
     end
 
     ---
-    -- Remove a node from the graph. This will also remove all edges pointing to
-    -- or originating from this node.
+    -- Remove a node from the graph.
+    -- This will also remove all edges pointing to or originating from this node.
     -- @param node - The node to remove from the graph.
     --
     function self:removeNode( node )
@@ -164,7 +165,8 @@ function Graph.new()
 
     ---
     -- Returns the node the id is pointing to.
-    -- param id - The id to check for.
+    -- @param id - The id to check for.
+    --
     function self:getNode( id )
         return nodes[id];
     end
@@ -198,6 +200,14 @@ function Graph.new()
         return ( ( maxX - minX ) * 0.5 ) + minX, ( ( maxY - minY ) * 0.5 ) + minY;
     end
 
+    ---
+    -- Turn a node into an anchor.
+    -- Anchored nodes have fixed positions and can't be moved by the physical
+    -- forces.
+    -- @param id - The node's id.
+    -- @param x  - The x coordinate to anchor the node to.
+    -- @param y  - The x coordinate to anchor the node to.
+    --
     function self:setAnchor( id, x, y )
         nodes[id]:setPosition( x, y );
         nodes[id]:setAnchor( true );

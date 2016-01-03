@@ -11,6 +11,9 @@ local DEFAULT_MASS = 0.05;
 
 ---
 -- @param id - A unique id which will be used to reference this node.
+-- @param x  - The x coordinate the Node should be spawned at (optional).
+-- @param y  - The y coordinate the Node should be spawned at (optional).
+-- @param anchor - Wether the node should be locked in place or not (optional).
 --
 function Node.new( id, x, y, anchor )
     local self = {};
@@ -40,6 +43,10 @@ function Node.new( id, x, y, anchor )
         ay = clamp( -FORCE_MAX, ay + fy, FORCE_MAX );
     end
 
+    ---
+    -- Attract this node to another node.
+    -- @param node - The node to use for force calculation.
+    --
     function self:attractTo( node )
         local dx, dy = px - node:getX(), py - node:getY();
         local distance = math.sqrt(dx * dx + dy * dy);
@@ -50,6 +57,10 @@ function Node.new( id, x, y, anchor )
         applyForce( dx * strength, dy * strength );
     end
 
+    ---
+    -- Repel this node from another node.
+    -- @param node - The node to use for force calculation.
+    --
     function self:repelFrom( node )
         local dx, dy = px - node:getX(), py - node:getY();
         local distance = math.sqrt(dx * dx + dy * dy);
@@ -63,6 +74,7 @@ function Node.new( id, x, y, anchor )
     ---
     -- Update the node's position based on the calculated velocity and
     -- acceleration.
+    -- @param dt - The delta time between frames.
     --
     function self:move( dt )
         vx = (vx + ax * dt * NODE_SPEED) * DAMPING_FACTOR;
@@ -72,9 +84,6 @@ function Node.new( id, x, y, anchor )
         ax, ay = 0, 0;
     end
 
-    ---
-    -- Returns the node's unique identifier.
-    --
     function self:getID()
         return id;
     end
