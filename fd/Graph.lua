@@ -55,9 +55,9 @@ function Graph.new()
         for _, node in pairs( table.nodes ) do
             local rx, ry = math.random( x, w ), math.random( y, h );
             if type( node ) == 'string' then
-                self:addNode( node, nil, rx, ry );
+                self:addNode( node, rx, ry );
             elseif type( node ) == 'table' then
-                self:addNode( node.id, node.name, node.x or rx, node.y or ry, node.anchor );
+                self:addNode( node.id, node.x or rx, node.y or ry, node.anchor );
             end
         end
 
@@ -72,9 +72,9 @@ function Graph.new()
     -- @param x - The x-coordinate at which to place the new node.
     -- @param y - The y-coordinate at which to place the new node.
     --
-    function self:addNode( id, name, x, y, anchor )
+    function self:addNode( id, x, y, anchor )
         assert( not nodes[id], "Node IDs must be unique." );
-        nodes[id] = Node.new( id, name, x, y, anchor );
+        nodes[id] = Node.new( id, x, y, anchor );
         return nodes[id];
     end
 
