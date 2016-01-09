@@ -64,9 +64,10 @@ function Graph.new()
     -- @param y  - The y coordinate the Node should be spawned at (optional).
     -- @param anchor - Wether the node should be locked in place or not (optional).
     --
-    function self:addNode( id, x, y, anchor )
+    function self:addNode( id, x, y, anchor, ... )
+            print( id, x, y, anchor, parent, path, spritebatch )
         assert( not nodes[id], "Node IDs must be unique." );
-        nodes[id] = Node.new( id, x, y, anchor );
+        nodes[id] = Node.new( id, x, y, anchor, ... );
         return nodes[id];
     end
 
