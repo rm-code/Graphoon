@@ -164,6 +164,14 @@ function Graph.new()
     end
 
     ---
+    -- Checks if a certain Node ID already exists.
+    -- @param id - The id to check for.
+    --
+    function self:hasNode( id )
+        return nodes[id] ~= nil;
+    end
+
+    ---
     -- Returns the node the id is pointing to.
     -- @param id - The id to check for.
     --
