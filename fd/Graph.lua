@@ -151,13 +151,21 @@ function Graph.new()
     end
 
     ---
-    -- This function receives a single parameter of type function to which it
-    -- will pass the edges and nodes tables. This means the user has to provide
-    -- his own drawing function.
-    -- @param func - The function to pass the tables to.
+    -- Draws the graph.
+    -- Takes two callback functions as a parameter. These will be called
+    -- on each edge and node in the graph and will be used to wite a custom
+    -- drawing function.
+    -- @param nodeCallback - A callback called on every node.
+    -- @param edgeCallback - A callback called on every edge.
     --
-    function self:draw( func )
-        func( edges, nodes );
+    function self:draw( nodeCallback, edgeCallback )
+        for _, edge in pairs( edges ) do
+            edgeCallback( edge );
+        end
+
+        for _, node in pairs( nodes ) do
+            nodeCallback( node );
+        end
     end
 
     ---
