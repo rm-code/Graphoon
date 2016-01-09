@@ -79,7 +79,7 @@ function Graph.new()
         end
 
         for _, edge in pairs( table.edges ) do
-            self:addEdge( nodes[edge.origin], nodes[edge.target] );
+            addEdge( nodes[edge.origin], nodes[edge.target] );
         end
     end
 
