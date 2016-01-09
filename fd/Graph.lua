@@ -242,4 +242,20 @@ function Graph.new()
     return self;
 end
 
+---
+-- Replaces the default Edge class with a custom one.
+-- @param class - The custom Edge class to use.
+--
+function Graph.setEdgeClass( class )
+    Edge = class;
+end
+
+---
+-- Replaces the default Node class with a custom one.
+-- @param class - The custom Node class to use.
+--
+function Graph.setNodeClass( class )
+    Node = class;
+end
+
 return Graph;
