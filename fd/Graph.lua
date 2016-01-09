@@ -115,11 +115,14 @@ function Graph.new()
     ---
     -- Updates the graph.
     -- @param dt - The delta time between frames.
+    -- @param nodeCallback - A callback called on every node.
+    -- @param edgeCallback - A callback called on every edge.
     --
-    function self:update( dt )
+    function self:update( dt, nodeCallback, edgeCallback )
         for _, edge in pairs( edges ) do
             edge.origin:attractTo( edge.target );
             edge.target:attractTo( edge.origin );
+            edgeCallback( edge );
         end
 
         resetBoundaries();
@@ -133,6 +136,7 @@ function Graph.new()
                 end
                 nodeA:move( dt );
             end
+            nodeCallback( nodeA );
 
             minX, maxX, minY, maxY = updateBoundaries( minX, maxX, minY, maxY, nodeA:getPosition() );
         end
