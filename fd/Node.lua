@@ -1,3 +1,5 @@
+local current = (...):gsub('%.[^%.]+$', '');
+
 local Node = {};
 
 local FORCE_SPRING = -0.01;

@@ -1,3 +1,5 @@
+local current = (...):gsub('%.[^%.]+$', '');
+
 local Edge = {};
 
 function Edge.new( id, origin, target )
