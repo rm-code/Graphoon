@@ -121,7 +121,10 @@ function Graph.new()
         for _, edge in pairs( edges ) do
             edge.origin:attractTo( edge.target );
             edge.target:attractTo( edge.origin );
-            edgeCallback( edge );
+
+            if edgeCallback then
+                edgeCallback( edge );
+            end
         end
 
         resetBoundaries();
@@ -135,7 +138,10 @@ function Graph.new()
                 end
                 nodeA:move( dt );
             end
-            nodeCallback( nodeA );
+
+            if nodeCallback then
+                nodeCallback( nodeA );
+            end
 
             minX, maxX, minY, maxY = updateBoundaries( minX, maxX, minY, maxY, nodeA:getPosition() );
         end
@@ -159,10 +165,12 @@ function Graph.new()
     --
     function self:draw( nodeCallback, edgeCallback )
         for _, edge in pairs( edges ) do
+            if not edgeCallback then break end
             edgeCallback( edge );
         end
 
         for _, node in pairs( nodes ) do
+            if not nodeCallback then break end
             nodeCallback( node );
         end
     end
