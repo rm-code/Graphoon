@@ -23,6 +23,7 @@ function Node.new( id, x, y, anchor, ... )
     local px, py = x or 0, y or 0;
     local ax, ay = 0, 0;
     local vx, vy = 0, 0;
+    local mass = DEFAULT_MASS;
 
     ---
     -- Clamps a value to a certain range.
@@ -69,7 +70,7 @@ function Node.new( id, x, y, anchor, ... )
         dx = dx / distance;
         dy = dy / distance;
 
-        local strength = FORCE_CHARGE * (DEFAULT_MASS / (distance * distance));
+        local strength = FORCE_CHARGE * ( mass / ( distance * distance ));
         applyForce(dx * strength, dy * strength);
     end
 
@@ -112,6 +113,10 @@ function Node.new( id, x, y, anchor, ... )
 
     function self:isAnchor()
         return anchor;
+    end
+
+    function self:setMass( nmass )
+        mass = nmass;
     end
 
     return self;
