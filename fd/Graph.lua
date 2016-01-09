@@ -95,7 +95,7 @@ function Graph.new()
     -- @param origin - The node from which the edge originates.
     -- @param target - The node to which the edge is pointing to.
     --
-    function self:addEdge( origin, target )
+    function self:connectNodes( origin, target )
         for _, edge in pairs(edges) do
             if edge.origin == origin and edge.target == target then
                 error "Trying to connect nodes which are already connected.";
