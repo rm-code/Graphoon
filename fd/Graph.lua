@@ -36,6 +36,23 @@ function Graph.new()
         return math.min( minX or nx, nx ), math.max( maxX or nx, nx ), math.min( minY or ny, ny ), math.max( maxY or ny, ny );
     end
 
+    ---
+    -- Adds a new edge between two nodes.
+    -- @param origin - The node from which the edge originates.
+    -- @param target - The node to which the edge is pointing to.
+    --
+    local function addEdge( origin, target )
+        for _, edge in pairs( edges ) do
+            if edge.origin == origin and edge.target == target then
+                error "Trying to connect nodes which are already connected.";
+            end
+        end
+
+        assert( origin ~= target, "Tried to connect a node with itself." );
+        edges[edgeIDs] = Edge.new( edgeIDs, origin, target );
+        edgeIDs = edgeIDs + 1;
+    end
+
     -- ------------------------------------------------
     -- Public Functions
     -- ------------------------------------------------
@@ -96,15 +113,16 @@ function Graph.new()
     -- @param target - The node to which the edge is pointing to.
     --
     function self:connectNodes( origin, target )
-        for _, edge in pairs(edges) do
-            if edge.origin == origin and edge.target == target then
-                error "Trying to connect nodes which are already connected.";
-            end
-        end
+        addEdge( origin, target );
+    end
 
-        assert(origin ~= target, "Tried to connect a node with itself.");
-        edges[edgeIDs] = Edge.new( edgeIDs, origin, target );
-        edgeIDs = edgeIDs + 1;
+    ---
+    -- Adds a new edge between two nodes referenced by their IDs.
+    -- @param origin - The node id from which the edge originates.
+    -- @param target - The node id to which the edge is pointing to.
+    --
+    function self:connectIDs( originID, targetID )
+        addEdge( nodes[originID], nodes[targetID] );
     end
 
     ---
