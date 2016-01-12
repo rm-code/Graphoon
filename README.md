@@ -58,5 +58,5 @@ Or by using the ```setAnchor``` function:
 
 ```lua
 -- Invert anchor status
-node:setAnchor( not node:isAnchor() )
+node:setAnchor( not node:isAnchor(), mouseX, mouseY )
 ```
