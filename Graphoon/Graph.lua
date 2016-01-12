@@ -36,14 +36,10 @@ function Graph.new()
     ---
     -- Updates the boundaries of the graph.
     -- This represents the rectangular area in which all nodes are contained.
-    -- @param minX - The current minimum x position.
-    -- @param maxX - The current maximum y position.
-    -- @param minY - The current minimum x position.
-    -- @param maxY - The current maximum y position.
     -- @param nx - The new x position to check.
     -- @param ny - The new y position to check.
     --
-    local function updateBoundaries( minX, maxX, minY, maxY, nx, ny )
+    local function updateBoundaries( nx, ny )
         return math.min( minX or nx, nx ), math.max( maxX or nx, nx ), math.min( minY or ny, ny ), math.max( maxY or ny, ny );
     end
 
@@ -158,7 +154,7 @@ function Graph.new()
                 nodeCallback( nodeA );
             end
 
-            minX, maxX, minY, maxY = updateBoundaries( minX, maxX, minY, maxY, nodeA:getPosition() );
+            minX, maxX, minY, maxY = updateBoundaries( nodeA:getPosition() );
         end
     end
 
