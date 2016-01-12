@@ -150,14 +150,6 @@ function Graph.new()
     end
 
     ---
-    -- Checks if the id points to an existing node.
-    -- @param id - The id to check for.
-    --
-    function self:exists( id )
-        return nodes[id] ~= nil;
-    end
-
-    ---
     -- Draws the graph.
     -- Takes two callback functions as a parameter. These will be called
     -- on each edge and node in the graph and will be used to wite a custom
