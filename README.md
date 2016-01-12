@@ -1,13 +1,18 @@
 # Graphoon
 
-A force directed algorithm written in Lua.
+A force directed graph algorithm written in Lua.
 
+## Introduction
+
+_Graphoon_ emerged from the graph calculation code used in both [LoGiVi](https://github.com/rm-code/logivi) and [LoFiVi](https://github.com/rm-code/lofivi).
+
+A force directed graph layout is achieved by simulating physical forces, which push and pull each node in the graph until a nice layout is found.
 
 ## Basic Usage
 
 The basic idea is that you create a new graph object, to which you can then add nodes and edges.
 
-```
+```lua
 local GraphLibrary = require('Graphoon').Graph
 
 graph = GraphLibrary.new()
@@ -20,9 +25,9 @@ By itself Graphoon only provides functionality for creating the graph and calcul
 
 It provides a ```draw``` and ```update``` function, which can be used to easily write your own rendering code.
 
-The ```draw``` function should be called with two callback functions. The first callback will be used for all nodes and the second one for all the edges. 
+The ```draw``` function should be called with two callback functions. The first callback will be used for all nodes and the second one for all the edges.
 
-```
+```lua
 graph:draw( function( node )
 				local x, y = node:getPosition()
 				drawCircle( 'fill', x, y, 10 )
@@ -44,15 +49,14 @@ Anchors can be used to attach a node to a certain position on the screen. This c
 
 This can either be done directly via the constructor of the node:
 
-```
+```lua
 -- Anchor the node to the center of the screen.
 graph:addNode( "Ash Williams", screenX * 0.5, screenY * 0.5, true )
 ```
 
 Or by using the ```setAnchor``` function:
 
-```
+```lua
 -- Invert anchor status
 node:setAnchor( not node:isAnchor() )
 ```
-
