@@ -2,14 +2,14 @@ local current = (...):gsub('%.[^%.]+$', '');
 
 local Node = {};
 
-local FORCE_SPRING = -0.01;
-local FORCE_CHARGE = 100000;
+local FORCE_SPRING = 0.005;
+local FORCE_CHARGE = 200;
 
 local FORCE_MAX = 4;
-local NODE_SPEED = 8;
+local NODE_SPEED = 128;
 local DAMPING_FACTOR = 0.95;
 
-local DEFAULT_MASS = 0.05;
+local DEFAULT_MASS = 3;
 
 ---
 -- @param id - A unique id which will be used to reference this node.
@@ -17,7 +17,7 @@ local DEFAULT_MASS = 0.05;
 -- @param y  - The y coordinate the Node should be spawned at (optional).
 -- @param anchor - Wether the node should be locked in place or not (optional).
 --
-function Node.new( id, x, y, anchor, ... )
+function Node.new( id, x, y, anchor )
     local self = {};
 
     local px, py = x or 0, y or 0;
@@ -47,16 +47,36 @@ function Node.new( id, x, y, anchor, ... )
     end
 
     ---
+    -- Calculates the manhattan distance from the node's coordinates to the
+    -- target coordinates.
+    -- @param tx - The target coordinate in x-direction.
+    -- @param ty - The target coordinate in y-direction.
+    --
+    local function getManhattanDistance( tx, ty )
+        return px - tx, py - ty;
+    end
+
+    ---
+    -- Calculates the actual distance vector between the node's current
+    -- coordinates and the target coordinates based on the manhattan distance.
+    -- @param dx - The horizontal distance.
+    -- @param dy - The vertical distance.
+    --
+    local function getRealDistance( dx, dy )
+        return math.sqrt( dx * dx + dy * dy ) + 0.1;
+    end
+
+    ---
     -- Attract this node to another node.
     -- @param node - The node to use for force calculation.
     --
     function self:attractTo( node )
-        local dx, dy = px - node:getX(), py - node:getY();
-        local distance = math.sqrt(dx * dx + dy * dy);
+        local dx, dy = getManhattanDistance( node:getPosition() );
+        local distance = getRealDistance( dx, dy );
         dx = dx / distance;
         dy = dy / distance;
 
-        local strength = FORCE_SPRING * distance;
+        local strength = -1 * FORCE_SPRING * distance * 0.5;
         applyForce( dx * strength, dy * strength );
     end
 
@@ -65,12 +85,12 @@ function Node.new( id, x, y, anchor, ... )
     -- @param node - The node to use for force calculation.
     --
     function self:repelFrom( node )
-        local dx, dy = px - node:getX(), py - node:getY();
-        local distance = math.sqrt(dx * dx + dy * dy);
+        local dx, dy = getManhattanDistance( node:getPosition() );
+        local distance = getRealDistance( dx, dy );
         dx = dx / distance;
         dy = dy / distance;
 
-        local strength = FORCE_CHARGE * ( mass / ( distance * distance ));
+        local strength = FORCE_CHARGE * (( mass * node:getMass() ) / ( distance * distance ));
         applyForce(dx * strength, dy * strength);
     end
 
@@ -117,6 +137,10 @@ function Node.new( id, x, y, anchor, ... )
 
     function self:setMass( nmass )
         mass = nmass;
+    end
+
+    function self:getMass()
+        return mass;
     end
 
     return self;

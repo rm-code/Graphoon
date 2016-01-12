@@ -1,5 +1,5 @@
 return {
-    _VERSION     = 'Graphoon v1.0.0',
+    _VERSION     = 'Graphoon v1.0.1',
     _DESCRIPTION = 'A force directed graph algorithm written in Lua.',
     _URL         = 'https://github.com/rm-code/Graphoon',
     _LICENSE     = [[

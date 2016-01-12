@@ -2,6 +2,8 @@
 
 A force directed graph algorithm written in Lua.
 
+![example](https://cloud.githubusercontent.com/assets/11627131/12252902/a5190d90-b8db-11e5-9199-a9fdb61416ac.png)
+
 ## Introduction
 
 _Graphoon_ emerged from the graph calculation code used in both [LoGiVi](https://github.com/rm-code/logivi) and [LoFiVi](https://github.com/rm-code/lofivi).
@@ -59,4 +61,29 @@ Or by using the ```setAnchor``` function:
 ```lua
 -- Invert anchor status
 node:setAnchor( not node:isAnchor(), mouseX, mouseY )
+```
+
+### Using custom classes for Nodes and Edges
+
+If you prefer to not touch the default classes, you can simply inherit from them and tell Graphoon to use your custom classes instead.
+
+```lua
+local GraphLibraryNode = require('lib.libfdgraph.fd').Node
+
+local CustomNodeClass = {}
+
+-- You can pass additional arguments to your custom class. Just make sure the
+-- default parameters ar in the right order.
+function CustomNodeClass.new( id, x, y, anchor, ... )
+    local self = GraphLibraryNode.new( id, x, y, anchor )
+
+	-- ... Custom code
+end
+
+return CustomNodeClass
+```
+
+```lua
+local GraphLibrary = require('Graphoon').Graph
+GraphLibrary.setNodeClass( require('CustomNodeClass') )
 ```
