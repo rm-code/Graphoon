@@ -1,30 +1,41 @@
 local current = (...):gsub('%.[^%.]+$', '');
+
+-- ------------------------------------------------
+-- Required Modules
+-- ------------------------------------------------
+
 local Node = require(current .. '.Node');
 local Edge = require(current .. '.Edge');
+
+-- ------------------------------------------------
+-- Module
+-- ------------------------------------------------
 
 local Graph = {};
 
 function Graph.new()
     local self = {};
 
-    local nodes = {};
-    local edges = {};
-    local edgeIDs = 0;
+    local nodes = {};   -- Contains all nodes in the graph.
+    local edges = {};   -- Contains all edges in the graph.
+    local edgeIDs = 0;  -- Used to create a unique ID for new edges.
 
-    local minX, maxX, minY, maxY;
+    local minX, maxX, minY, maxY; -- The boundaries of the graph.
 
     -- ------------------------------------------------
     -- Local Functions
     -- ------------------------------------------------
 
     ---
-    -- Sets the graph's boundaries to nil.
+    -- (Re-)Sets the graph's boundaries to nil.
     --
     local function resetBoundaries()
         minX, maxX, minY, maxY = nil, nil, nil, nil;
     end
 
     ---
+    -- Updates the boundaries of the graph.
+    -- This represents the rectangular area in which all nodes are contained.
     -- @param minX - The current minimum x position.
     -- @param maxX - The current maximum y position.
     -- @param minY - The current minimum x position.
@@ -58,11 +69,12 @@ function Graph.new()
     -- ------------------------------------------------
 
     ---
-    -- Add a node to the graph.
+    -- Adds a node to the graph.
     -- @param id - The ID will be used to reference the Node inside of the graph.
     -- @param x  - The x coordinate the Node should be spawned at (optional).
     -- @param y  - The y coordinate the Node should be spawned at (optional).
     -- @param anchor - Wether the node should be locked in place or not (optional).
+    -- @param ... - Additional parameters (useful when a custom Node class is used).
     --
     function self:addNode( id, x, y, anchor, ... )
         assert( not nodes[id], "Node IDs must be unique." );
@@ -71,8 +83,9 @@ function Graph.new()
     end
 
     ---
-    -- Remove a node from the graph.
-    -- This will also remove all edges pointing to or originating from this node.
+    -- Removes a node from the graph.
+    -- This will also remove all edges pointing to, or originating from this
+    -- node.
     -- @param node - The node to remove from the graph.
     --
     function self:removeNode( node )
@@ -102,7 +115,7 @@ function Graph.new()
     end
 
     ---
-    -- Removes all edges leading to or originating from a node.
+    -- Removes all edges leading to, or originating from a node.
     -- @param node - The node to remove all edges from.
     --
     function self:removeEdges( node )
@@ -116,8 +129,8 @@ function Graph.new()
     ---
     -- Updates the graph.
     -- @param dt - The delta time between frames.
-    -- @param nodeCallback - A callback called on every node.
-    -- @param edgeCallback - A callback called on every edge.
+    -- @param nodeCallback - A callback called on every node (optional).
+    -- @param edgeCallback - A callback called on every edge (optional).
     --
     function self:update( dt, nodeCallback, edgeCallback )
         for _, edge in pairs( edges ) do
@@ -220,7 +233,7 @@ function Graph.new()
     -- forces.
     -- @param id - The node's id.
     -- @param x  - The x coordinate to anchor the node to.
-    -- @param y  - The x coordinate to anchor the node to.
+    -- @param y  - The y coordinate to anchor the node to.
     --
     function self:setAnchor( id, x, y )
         nodes[id]:setPosition( x, y );
