@@ -2,6 +2,8 @@
 
 A force directed graph algorithm written in Lua.
 
+![example](https://cloud.githubusercontent.com/assets/11627131/12252902/a5190d90-b8db-11e5-9199-a9fdb61416ac.png)
+
 ## Introduction
 
 _Graphoon_ emerged from the graph calculation code used in both [LoGiVi](https://github.com/rm-code/logivi) and [LoFiVi](https://github.com/rm-code/lofivi).
