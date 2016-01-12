@@ -96,6 +96,8 @@ function Graph.new()
     -- @param target - The node id to which the edge is pointing to.
     --
     function self:connectIDs( originID, targetID )
+        assert( nodes[originID], string.format( "Tried to add an Edge to the nonexistent Node \"%s\".", originID ));
+        assert( nodes[targetID], string.format( "Tried to add an Edge to the nonexistent Node \"%s\".", targetID ));
         addEdge( nodes[originID], nodes[targetID] );
     end
 
