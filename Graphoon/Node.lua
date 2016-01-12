@@ -17,7 +17,7 @@ local DEFAULT_MASS = 0.05;
 -- @param y  - The y coordinate the Node should be spawned at (optional).
 -- @param anchor - Wether the node should be locked in place or not (optional).
 --
-function Node.new( id, x, y, anchor, ... )
+function Node.new( id, x, y, anchor )
     local self = {};
 
     local px, py = x or 0, y or 0;
