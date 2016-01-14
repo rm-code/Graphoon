@@ -2,7 +2,7 @@
 
 A force directed graph algorithm written in Lua.
 
-![example](https://cloud.githubusercontent.com/assets/11627131/12252902/a5190d90-b8db-11e5-9199-a9fdb61416ac.png)
+![example](https://cloud.githubusercontent.com/assets/11627131/12313149/44ea06a0-ba65-11e5-82d0-4867022fbdf5.gif)
 
 ## Introduction
 
