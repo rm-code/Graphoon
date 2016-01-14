@@ -1,9 +1,8 @@
 # Graphoon
+[![Version](https://img.shields.io/badge/Version-1.0.1-blue.svg)](https://github.com/rm-code/Graphoon/releases/latest)
+[![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg)](LICENSE.md)
 
 A force directed graph algorithm written in Lua.
-
-[![GitHub release](https://img.shields.io/github/release/rm-code/graphoon.svg)](https://github.com/rm-code/Graphoon/releases/latest)
-[![License](http://img.shields.io/badge/Licence-MIT-brightgreen.svg)](LICENSE.md)
 
 ![example](https://cloud.githubusercontent.com/assets/11627131/12313149/44ea06a0-ba65-11e5-82d0-4867022fbdf5.gif)
 
