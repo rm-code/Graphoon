@@ -220,7 +220,7 @@ function Graph.new()
     -- Returns the x and y coordinates of the graph's center.
     --
     function self:getCenter()
-        return ( ( maxX - minX ) * 0.5 ) + minX, ( ( maxY - minY ) * 0.5 ) + minY;
+        return ( maxX - minX ) * 0.5 + minX, ( maxY - minY ) * 0.5 + minY;
     end
 
     ---
