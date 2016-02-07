@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Graphoon by rm-code</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Graphoon</h1>
+        <p>A force directed graph algorithm written in Lua</p>
+
+        <p class="view"><a href="https://github.com/rm-code/Graphoon">View the Project on GitHub <small>rm-code/Graphoon</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/rm-code/Graphoon/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/rm-code/Graphoon/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/rm-code/Graphoon">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="graphoon" class="anchor" href="#graphoon" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Graphoon</h1>
+
+<p><a href="https://github.com/rm-code/Graphoon/releases/latest"><img src="https://img.shields.io/badge/Version-1.0.1-blue.svg" alt="Version"></a>
+<a href="LICENSE.md"><img src="http://img.shields.io/badge/Licence-MIT-brightgreen.svg" alt="License"></a></p>
+
+<p>A force directed graph algorithm written in Lua.</p>
+
+<p><img src="https://cloud.githubusercontent.com/assets/11627131/12313149/44ea06a0-ba65-11e5-82d0-4867022fbdf5.gif" alt="example"></p>
+
+<h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p><em>Graphoon</em> emerged from the graph calculation code used in both <a href="https://github.com/rm-code/logivi">LoGiVi</a> and <a href="https://github.com/rm-code/lofivi">LoFiVi</a>.</p>
+
+<p>A force directed graph layout is achieved by simulating physical forces, which push and pull each node in the graph until a nice layout is found.</p>
+
+<h2>
+<a id="basic-usage" class="anchor" href="#basic-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Basic Usage</h2>
+
+<p>The basic idea is that you create a new graph object, to which you can then add nodes and edges.</p>
+
+<div class="highlight highlight-source-lua"><pre><span class="pl-k">local</span> GraphLibrary <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>Graphoon<span class="pl-pds">'</span></span>).<span class="pl-smi">Graph</span>
+
+graph <span class="pl-k">=</span> GraphLibrary.<span class="pl-c1">new</span>()
+graph:<span class="pl-c1">addNode</span>( <span class="pl-s"><span class="pl-pds">"</span>Ash Williams<span class="pl-pds">"</span></span> )
+graph:<span class="pl-c1">addNode</span>( <span class="pl-s"><span class="pl-pds">"</span>Necronomicon<span class="pl-pds">"</span></span> )
+graph:<span class="pl-c1">connectIDs</span>( <span class="pl-s"><span class="pl-pds">"</span>Ash Williams<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Necronomicon<span class="pl-pds">"</span></span> )</pre></div>
+
+<p>By itself Graphoon only provides functionality for creating the graph and calculating the layout based on physical attraction and repulsion forces.</p>
+
+<p>It provides a <code>draw</code> and <code>update</code> function, which can be used to easily write your own rendering code.</p>
+
+<p>The <code>draw</code> function should be called with two callback functions. The first callback will be used for all nodes and the second one for all the edges.</p>
+
+<div class="highlight highlight-source-lua"><pre>graph:<span class="pl-c1">draw</span>( <span class="pl-k">function</span>(<span class="pl-smi"> node </span>)
+                <span class="pl-k">local</span> x, y <span class="pl-k">=</span> node:<span class="pl-c1">getPosition</span>()
+                <span class="pl-c1">drawCircle</span>( <span class="pl-s"><span class="pl-pds">'</span>fill<span class="pl-pds">'</span></span>, x, y, <span class="pl-c1">10</span> )
+            <span class="pl-k">end</span>,
+            <span class="pl-k">function</span>(<span class="pl-smi"> edge </span>)
+                <span class="pl-k">local</span> ox, oy <span class="pl-k">=</span> edge.<span class="pl-smi">origin</span>:<span class="pl-c1">getPosition</span>()
+                <span class="pl-k">local</span> tx, ty <span class="pl-k">=</span> edge.<span class="pl-smi">target</span>:<span class="pl-c1">getPosition</span>()
+                <span class="pl-c1">drawLine</span>( ox, oy, tx, ty )
+            <span class="pl-k">end</span>)</pre></div>
+
+<p>At its simplest the force calculations can be updated via <code>graph:update( dt )</code>, but the <code>update</code> function also can receive optional callbacks for both nodes and edges.</p>
+
+<h2>
+<a id="advanced-usage" class="anchor" href="#advanced-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Advanced usage</h2>
+
+<h3>
+<a id="using-anchors" class="anchor" href="#using-anchors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using anchors</h3>
+
+<p>Anchors can be used to attach a node to a certain position on the screen. This can be useful if you want to center a certain node for example.</p>
+
+<p>This can either be done directly via the constructor of the node:</p>
+
+<div class="highlight highlight-source-lua"><pre><span class="pl-c">-- Anchor the node to the center of the screen.</span>
+graph:<span class="pl-c1">addNode</span>( <span class="pl-s"><span class="pl-pds">"</span>Ash Williams<span class="pl-pds">"</span></span>, screenX <span class="pl-k">*</span> <span class="pl-c1">0.5</span>, screenY <span class="pl-k">*</span> <span class="pl-c1">0.5</span>, <span class="pl-c1">true</span> )</pre></div>
+
+<p>Or by using the <code>setAnchor</code> function:</p>
+
+<div class="highlight highlight-source-lua"><pre><span class="pl-c">-- Invert anchor status</span>
+node:<span class="pl-c1">setAnchor</span>( <span class="pl-k">not</span> node:<span class="pl-c1">isAnchor</span>(), mouseX, mouseY )</pre></div>
+
+<h3>
+<a id="using-custom-classes-for-nodes-and-edges" class="anchor" href="#using-custom-classes-for-nodes-and-edges" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using custom classes for Nodes and Edges</h3>
+
+<p>If you prefer to not touch the default classes, you can simply inherit from them and tell Graphoon to use your custom classes instead.</p>
+
+<div class="highlight highlight-source-lua"><pre><span class="pl-k">local</span> GraphLibraryNode <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>lib.libfdgraph.fd<span class="pl-pds">'</span></span>).<span class="pl-smi">Node</span>
+
+<span class="pl-k">local</span> CustomNodeClass <span class="pl-k">=</span> {}
+
+<span class="pl-c">-- You can pass additional arguments to your custom class. Just make sure the</span>
+<span class="pl-c">-- default parameters ar in the right order.</span>
+<span class="pl-k">function</span> <span class="pl-en">CustomNodeClass.</span><span class="pl-en">new</span>(<span class="pl-smi"> id, x, y, anchor, ... </span>)
+    <span class="pl-k">local</span> <span class="pl-v">self</span> <span class="pl-k">=</span> GraphLibraryNode.<span class="pl-c1">new</span>( id, x, y, anchor )
+
+    <span class="pl-c">-- ... Custom code</span>
+<span class="pl-k">end</span>
+
+<span class="pl-k">return</span> CustomNodeClass</pre></div>
+
+<div class="highlight highlight-source-lua"><pre><span class="pl-k">local</span> GraphLibrary <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>Graphoon<span class="pl-pds">'</span></span>).<span class="pl-smi">Graph</span>
+GraphLibrary.<span class="pl-c1">setNodeClass</span>( <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>CustomNodeClass<span class="pl-pds">'</span></span>) )</pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/rm-code">rm-code</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
