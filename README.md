@@ -4,7 +4,7 @@
 
 A force directed graph algorithm written in Lua.
 
-![example](https://cloud.githubusercontent.com/assets/11627131/12313149/44ea06a0-ba65-11e5-82d0-4867022fbdf5.gif)
+[![example](https://cloud.githubusercontent.com/assets/11627131/12313149/44ea06a0-ba65-11e5-82d0-4867022fbdf5.gif)](http://rm-code.github.io/Graphoon/)
 
 ## Introduction
 
