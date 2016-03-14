@@ -93,9 +93,7 @@ Module.expectedDataFileDownloads++;
     function assert(check, msg) {
       if (!check) throw msg + new Error().stack;
     }
-Module['FS_createPath']('/', 'release-performance', true, true);
-Module['FS_createPath']('/release-performance', 'Graphoon', true, true);
-Module['FS_createPath']('/release-performance', 'theme', true, true);
+Module['FS_createPath']('/', 'Graphoon', true, true);
 
     function DataRequest(start, end, crunched, audio) {
       this.start = start;
@@ -175,6 +173,6 @@ Module['FS_createPath']('/release-performance', 'theme', true, true);
   }
 
  }
- loadPackage({"files": [{"audio": 0, "start": 0, "crunched": 0, "end": 3510, "filename": "/release-performance/Camera.lua"}, {"audio": 0, "start": 3510, "crunched": 0, "end": 3714, "filename": "/release-performance/CHANGELOG.md"}, {"audio": 0, "start": 3714, "crunched": 0, "end": 7051, "filename": "/release-performance/conf.lua"}, {"audio": 0, "start": 7051, "crunched": 0, "end": 25092, "filename": "/release-performance/file.png"}, {"audio": 0, "start": 25092, "crunched": 0, "end": 25128, "filename": "/release-performance/Graphoon.lua"}, {"audio": 0, "start": 25128, "crunched": 0, "end": 28821, "filename": "/release-performance/index.html"}, {"audio": 0, "start": 28821, "crunched": 0, "end": 29886, "filename": "/release-performance/LICENSE.md"}, {"audio": 0, "start": 29886, "crunched": 0, "end": 6222155, "filename": "/release-performance/love.js"}, {"audio": 0, "start": 6222155, "crunched": 0, "end": 6842688, "filename": "/release-performance/love.js.mem"}, {"audio": 0, "start": 6842688, "crunched": 0, "end": 6850412, "filename": "/release-performance/main.lua"}, {"audio": 0, "start": 6850412, "crunched": 0, "end": 6853518, "filename": "/release-performance/README.md"}, {"audio": 0, "start": 6853518, "crunched": 0, "end": 6853750, "filename": "/release-performance/Graphoon/Edge.lua"}, {"audio": 0, "start": 6853750, "crunched": 0, "end": 6861843, "filename": "/release-performance/Graphoon/Graph.lua"}, {"audio": 0, "start": 6861843, "crunched": 0, "end": 6863369, "filename": "/release-performance/Graphoon/init.lua"}, {"audio": 0, "start": 6863369, "crunched": 0, "end": 6867278, "filename": "/release-performance/Graphoon/Node.lua"}, {"audio": 0, "start": 6867278, "crunched": 0, "end": 6874439, "filename": "/release-performance/theme/bg.png"}, {"audio": 0, "start": 6874439, "crunched": 0, "end": 6875225, "filename": "/release-performance/theme/love.css"}], "remote_package_size": 6875225, "package_uuid": "4072c68b-906f-4db6-8634-a286827f35df"});
+ loadPackage({"files": [{"audio": 0, "start": 0, "crunched": 0, "end": 3510, "filename": "/Camera.lua"}, {"audio": 0, "start": 3510, "crunched": 0, "end": 3714, "filename": "/CHANGELOG.md"}, {"audio": 0, "start": 3714, "crunched": 0, "end": 7051, "filename": "/conf.lua"}, {"audio": 0, "start": 7051, "crunched": 0, "end": 25092, "filename": "/file.png"}, {"audio": 0, "start": 25092, "crunched": 0, "end": 25128, "filename": "/Graphoon.lua"}, {"audio": 0, "start": 25128, "crunched": 0, "end": 26193, "filename": "/LICENSE.md"}, {"audio": 0, "start": 26193, "crunched": 0, "end": 33917, "filename": "/main.lua"}, {"audio": 0, "start": 33917, "crunched": 0, "end": 37023, "filename": "/README.md"}, {"audio": 0, "start": 37023, "crunched": 0, "end": 37255, "filename": "/Graphoon/Edge.lua"}, {"audio": 0, "start": 37255, "crunched": 0, "end": 45348, "filename": "/Graphoon/Graph.lua"}, {"audio": 0, "start": 45348, "crunched": 0, "end": 46874, "filename": "/Graphoon/init.lua"}, {"audio": 0, "start": 46874, "crunched": 0, "end": 50783, "filename": "/Graphoon/Node.lua"}], "remote_package_size": 50783, "package_uuid": "0c1ad511-6a1f-4bff-a08e-9d5e15e5131d"});
 
 })();
